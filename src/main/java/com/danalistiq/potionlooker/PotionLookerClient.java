@@ -35,19 +35,19 @@ public final class PotionLookerClient implements ClientModInitializer {
                 this::renderHud);
     }
 
-    private void renderHud(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
-        Minecraft mc = Minecraft.getInstance();
+  private void renderHud(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
+    Minecraft mc = Minecraft.getInstance();
 
-        while (configKey.consumeClick()) {
-            mc.setScreen(PotionLookerConfigScreen.create(null));
-        }
+    while (configKey.consumeClick()) {
+        mc.gui.setScreen(PotionLookerConfigScreen.create(null));
+    }
 
-        if (!CONFIG.enabled || mc.player == null) return;
+    if (!CONFIG.enabled || mc.player == null) return;
 
-        if (mc.hitResult instanceof net.minecraft.world.phys.EntityHitResult hit
-                && hit.getEntity() instanceof Player target
-                && target != mc.player
-                && mc.player.distanceTo(target) <= CONFIG.maxDistance) {
+    if (mc.hitResult instanceof net.minecraft.world.phys.EntityHitResult hit
+            && hit.getEntity() instanceof Player target
+            && target != mc.player
+            && mc.player.distanceTo(target) <= CONFIG.maxDistance) {
 
             PotionLookerHud.render(graphics, target, CONFIG);
         }

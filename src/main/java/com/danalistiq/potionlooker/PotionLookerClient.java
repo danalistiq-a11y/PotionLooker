@@ -3,7 +3,7 @@ package com.danalistiq.potionlooker;
 import com.danalistiq.potionlooker.config.PotionLookerConfig;
 import com.danalistiq.potionlooker.config.PotionLookerConfigScreen;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.DeltaTracker;
@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import org.lwjgl.glfw.GLFW;
 
 public final class PotionLookerClient implements ClientModInitializer {
+
     public static PotionLookerConfig CONFIG;
     private KeyMapping configKey;
 
@@ -22,10 +23,11 @@ public final class PotionLookerClient implements ClientModInitializer {
     public void onInitializeClient() {
         CONFIG = PotionLookerConfig.load();
 
-        configKey = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+        configKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 "key.potionlooker.open_config",
                 GLFW.GLFW_KEY_O,
-                "category.potionlooker"));
+                new KeyMapping.Category(
+                        Identifier.fromNamespaceAndPath("potionlooker", "category"))));
 
         HudElementRegistry.attachElementAfter(
                 VanillaHudElements.CROSSHAIR,
@@ -37,7 +39,7 @@ public final class PotionLookerClient implements ClientModInitializer {
         Minecraft mc = Minecraft.getInstance();
 
         while (configKey.consumeClick()) {
-            mc.gui.setScreen(PotionLookerConfigScreen.create(mc.gui.getScreen()));
+            mc.gui.setScreen(PotionLookerConfigScreen.create(mc.screen));
         }
 
         if (!CONFIG.enabled || mc.player == null) return;
@@ -46,6 +48,7 @@ public final class PotionLookerClient implements ClientModInitializer {
                 && hit.getEntity() instanceof Player target
                 && target != mc.player
                 && mc.player.distanceTo(target) <= CONFIG.maxDistance) {
+
             PotionLookerHud.render(graphics, target, CONFIG);
         }
     }

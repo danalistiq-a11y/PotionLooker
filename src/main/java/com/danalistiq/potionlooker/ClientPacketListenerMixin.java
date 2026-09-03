@@ -18,15 +18,13 @@ public class ClientPacketListenerMixin {
             ClientboundUpdateMobEffectPacket packet,
             CallbackInfo ci
     ) {
+        System.out.println("POTIONLOOKER MIXIN WORKS!");
+
         System.out.println(
                 "POTIONLOOKER EFFECT PACKET: entity="
                         + packet.getEntityId()
                         + " effect="
                         + packet.getEffect()
-                        + " amplifier="
-                        + packet.getEffectAmplifier()
-                        + " duration="
-                        + packet.getEffectDurationTicks()
         );
     }
 }

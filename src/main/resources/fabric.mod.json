@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "potionlooker",
+  "version": "${version}",
+  "name": "Potion Looker",
+  "description": "Shows active status effects of the player you are looking at.",
+  "authors": ["danalistiq"],
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.danalistiq.potionlooker.PotionLookerClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.2",
+    "fabric-api": "*",
+    "cloth-config": ">=26.2.155"
+  }
+}

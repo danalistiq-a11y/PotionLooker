@@ -35,13 +35,13 @@ public final class PotionLookerHud {
             g.fill(x, y, x + width, y + height, (a << 24) | 0x101010);
         }
 
-        g.text(mc.font, Component.literal(target.getName().getString()),
-                x + pad, y + pad, 0xFFFFFFFF);
+        int yy = y + pad;
 
-        int yy = y + pad + 14;
         for (MobEffectInstance effect : effects) {
             String name = effect.getEffect().value().getDisplayName().getString();
-            if (c.showLevel) name += " " + roman(effect.getAmplifier() + 1);
+
+            if (c.showLevel)
+                name += " " + roman(effect.getAmplifier() + 1);
 
             g.text(mc.font, Component.literal(name), x + pad, yy, 0xFFFFFFFF);
 
@@ -50,6 +50,7 @@ public final class PotionLookerHud {
                 g.text(mc.font, Component.literal(duration),
                         x + width - pad - mc.font.width(duration), yy, 0xFFDDDDDD);
             }
+
             yy += row;
         }
     }
@@ -62,8 +63,12 @@ public final class PotionLookerHud {
 
     private static String roman(int n) {
         return switch (n) {
-            case 1 -> "I"; case 2 -> "II"; case 3 -> "III";
-            case 4 -> "IV"; case 5 -> "V"; default -> Integer.toString(n);
+            case 1 -> "I";
+            case 2 -> "II";
+            case 3 -> "III";
+            case 4 -> "IV";
+            case 5 -> "V";
+            default -> Integer.toString(n);
         };
     }
 }

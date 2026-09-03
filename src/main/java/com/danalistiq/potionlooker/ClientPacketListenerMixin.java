@@ -1,5 +1,4 @@
 package com.danalistiq.potionlooker.mixin;
-
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,13 +17,11 @@ public class ClientPacketListenerMixin {
             ClientboundUpdateMobEffectPacket packet,
             CallbackInfo ci
     ) {
-        System.out.println("POTIONLOOKER MIXIN WORKS!");
-
-        System.out.println(
-                "POTIONLOOKER EFFECT PACKET: entity="
-                        + packet.getEntityId()
-                        + " effect="
-                        + packet.getEffect()
+       System.out.println(
+        "POTIONLOOKER EFFECT PACKET: entity="
+                + packet.getEntityId()
+                + " effect="
+                + packet.getEffect()
         );
     }
 }

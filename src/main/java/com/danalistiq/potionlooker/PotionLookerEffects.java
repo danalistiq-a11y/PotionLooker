@@ -1,7 +1,6 @@
 package com.danalistiq.potionlooker;
 
 import net.minecraft.core.Holder;
-import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.world.effect.MobEffect;
 
@@ -33,21 +32,6 @@ public final class PotionLookerEffects {
                                 System.nanoTime()
                         )
                 );
-    }
-
-    public static void remove(ClientboundRemoveMobEffectPacket packet) {
-        Map<Holder<MobEffect>, StoredEffect> effects =
-                EFFECTS.get(packet.getEntityId());
-
-        if (effects == null) {
-            return;
-        }
-
-        effects.remove(packet.getEffect());
-
-        if (effects.isEmpty()) {
-            EFFECTS.remove(packet.getEntityId());
-        }
     }
 
     public static List<StoredEffect> get(int entityId) {

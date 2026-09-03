@@ -49,7 +49,8 @@ public final class PotionLookerClient implements ClientModInitializer {
             && target != mc.player
             && mc.player.distanceTo(target) <= CONFIG.maxDistance) {
 
-            PotionLookerHud.render(graphics, target, CONFIG);
-        }
+        System.out.println("POTIONLOOKER TARGET: " + target.getName().getString());
+
+        PotionLookerHud.render(graphics, target, CONFIG);
     }
 }

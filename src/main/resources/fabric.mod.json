@@ -7,9 +7,12 @@
   "authors": ["danalistiq"],
   "environment": "client",
   "entrypoints": {
-    "client": ["com.danalistiq.potionlooker.PotionLookerClient"]
-  },
-  "depends": {
+  "client": ["com.danalistiq.potionlooker.PotionLookerClient"]
+},
+"mixins": [
+  "potionlooker.mixins.json"
+],
+"depends": {
     "fabricloader": ">=0.19.3",
     "minecraft": "~26.2",
     "fabric-api": "*",

@@ -8,10 +8,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public final class PotionLookerHud {
+
     private PotionLookerHud() {
     }
 
@@ -25,41 +25,27 @@ public final class PotionLookerHud {
         List<MobEffectInstance> effects =
                 new ArrayList<>(target.getActiveEffects());
 
-        effects.sort(Comparator.comparing(
-                effect -> effect.getEffect().value()
-                        .getDisplayName()
-                        .getString()
-        ));
+        int x = 20;
+        int y = 50;
 
-        if (c.maxEffects > 0 && effects.size() > c.maxEffects) {
-            effects = effects.subList(0, c.maxEffects);
-        }
+        // Testinformatie
+        g.text(
+                mc.font,
+                Component.literal("Target: " + target.getName().getString()),
+                x,
+                y,
+                0xFFFFFFFF
+        );
 
-        int row = 18;
-        int pad = 6;
-        int width = c.panelWidth;
+        g.text(
+                mc.font,
+                Component.literal("Effects gevonden: " + effects.size()),
+                x,
+                y + 18,
+                0xFFFFFFFF
+        );
 
-        int height = pad * 2 + effects.size() * row;
-
-        int x = g.guiWidth() - width - c.rightMargin;
-        int y = c.topMargin;
-
-        if (c.background) {
-            int alpha = Math.max(
-                    0,
-                    Math.min(255, c.backgroundAlpha)
-            );
-
-            g.fill(
-                    x,
-                    y,
-                    x + width,
-                    y + height,
-                    (alpha << 24) | 0x101010
-            );
-        }
-
-        int yy = y + pad;
+        int yy = y + 36;
 
         for (MobEffectInstance effect : effects) {
 
@@ -68,54 +54,22 @@ public final class PotionLookerHud {
                     .getDisplayName()
                     .getString();
 
-            if (c.showLevel) {
-                name += " " + roman(effect.getAmplifier() + 1);
-            }
+            String text = name
+                    + " "
+                    + (effect.getAmplifier() + 1)
+                    + " | "
+                    + (effect.getDuration() / 20)
+                    + "s";
 
             g.text(
                     mc.font,
-                    Component.literal(name),
-                    x + pad,
+                    Component.literal(text),
+                    x,
                     yy,
                     0xFFFFFFFF
             );
 
-            if (c.showDuration) {
-                String duration = format(effect.getDuration());
-
-                g.text(
-                        mc.font,
-                        Component.literal(duration),
-                        x + width - pad - mc.font.width(duration),
-                        yy,
-                        0xFFDDDDDD
-                );
-            }
-
-            yy += row;
+            yy += 18;
         }
-    }
-
-    private static String format(int ticks) {
-        if (ticks < 0) {
-            return "∞";
-        }
-
-        int seconds = ticks / 20;
-
-        return (seconds / 60)
-                + ":"
-                + String.format("%02d", seconds % 60);
-    }
-
-    private static String roman(int number) {
-        return switch (number) {
-            case 1 -> "I";
-            case 2 -> "II";
-            case 3 -> "III";
-            case 4 -> "IV";
-            case 5 -> "V";
-            default -> Integer.toString(number);
-        };
     }
 }

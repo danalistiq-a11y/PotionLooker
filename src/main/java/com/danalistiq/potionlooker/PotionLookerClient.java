@@ -39,7 +39,7 @@ public final class PotionLookerClient implements ClientModInitializer {
         Minecraft mc = Minecraft.getInstance();
 
         while (configKey.consumeClick()) {
-            mc.gui.setScreen(PotionLookerConfigScreen.create(mc.screen));
+            mc.setScreen(PotionLookerConfigScreen.create(null));
         }
 
         if (!CONFIG.enabled || mc.player == null) return;

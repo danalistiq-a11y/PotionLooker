@@ -67,6 +67,3 @@ public final class PotionLookerClient implements ClientModInitializer {
         }
     }
 }
-        }
-    }
-}

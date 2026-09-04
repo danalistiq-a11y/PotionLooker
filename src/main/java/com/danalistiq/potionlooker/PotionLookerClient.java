@@ -11,8 +11,12 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class PotionLookerClient implements ClientModInitializer {
 
@@ -49,9 +53,20 @@ public final class PotionLookerClient implements ClientModInitializer {
                 && target != mc.player
                 && mc.player.distanceTo(target) <= CONFIG.maxDistance) {
 
-            System.out.println("POTIONLOOKER TARGET: " + target.getName().getString());
+            List<MobEffectInstance> effects =
+                    new ArrayList<>(target.getActiveEffects());
+
+            System.out.println(
+                    "POTIONLOOKER EFFECTS: "
+                            + target.getName().getString()
+                            + " = "
+                            + effects.size()
+            );
 
             PotionLookerHud.render(graphics, target, CONFIG);
+        }
+    }
+}
         }
     }
 }

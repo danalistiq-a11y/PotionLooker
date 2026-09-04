@@ -1,7 +1,7 @@
 package com.danalistiq.potionlooker.mixin;
 
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,18 +32,18 @@ public class ClientPacketListenerMixin {
             at = @At("HEAD")
     )
     private void potionLooker$customPacket(
-            ClientboundCustomPayloadPacket packet,
+            CustomPacketPayload payload,
             CallbackInfo ci
     ) {
         try {
             System.out.println(
                     "POTIONLOOKER CUSTOM PACKET: "
-                            + packet.payload().type().id()
+                            + payload.type().id()
             );
 
             System.out.println(
                     "POTIONLOOKER CUSTOM DATA: "
-                            + packet.payload()
+                            + payload
             );
         } catch (Exception e) {
             System.out.println(

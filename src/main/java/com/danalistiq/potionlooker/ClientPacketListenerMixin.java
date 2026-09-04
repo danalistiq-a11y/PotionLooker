@@ -1,7 +1,7 @@
 package com.danalistiq.potionlooker.mixin;
 
-import com.danalistiq.potionlooker.PotionLookerEffects;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,6 +19,37 @@ public class ClientPacketListenerMixin {
             ClientboundUpdateMobEffectPacket packet,
             CallbackInfo ci
     ) {
-        PotionLookerEffects.update(packet);
+        System.out.println(
+                "POTIONLOOKER EFFECT PACKET: entity="
+                        + packet.getEntityId()
+                        + " effect="
+                        + packet.getEffect()
+        );
+    }
+
+    @Inject(
+            method = "handleCustomPayload",
+            at = @At("HEAD")
+    )
+    private void potionLooker$customPacket(
+            ClientboundCustomPayloadPacket packet,
+            CallbackInfo ci
+    ) {
+        try {
+            System.out.println(
+                    "POTIONLOOKER CUSTOM PACKET: "
+                            + packet.payload().type().id()
+            );
+
+            System.out.println(
+                    "POTIONLOOKER CUSTOM DATA: "
+                            + packet.payload()
+            );
+        } catch (Exception e) {
+            System.out.println(
+                    "POTIONLOOKER CUSTOM PACKET ERROR: "
+                            + e
+            );
+        }
     }
 }
